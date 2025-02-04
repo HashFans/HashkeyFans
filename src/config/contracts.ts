@@ -837,3 +837,24 @@ export const REDPACKET_CONTRACT = {
     }
   ] as const
 }; 
+
+// 添加浏览器 API 配置
+export const EXPLORER_API = {
+  TESTNET: 'https://hashkeychain-testnet-explorer.alt.technology',
+  MAINNET: 'https://explorer.hsk.xyz'
+};
+
+// 修改 fetchTokens 函数
+const fetchTokens = async (address: string) => {
+  const isTestnet = process.env.NEXT_PUBLIC_CHAIN_ID === '3441005';
+  const baseUrl = isTestnet ? EXPLORER_API.TESTNET : EXPLORER_API.MAINNET;
+    
+  const response = await fetch(
+    `${baseUrl}/api/v2/addresses/${address}/tokens?type=ERC-20`
+  );
+  const data = await response.json();
+  return data.items.map((item: any) => ({
+    address: item.token?.address || '',
+    symbol: item.token?.symbol || '',
+  }));
+}; 

@@ -123,7 +123,10 @@ export default {
         count: "Count",
         message: "Message",
         view: "View Red Packet"
-      }
+      },
+      selectToken: "Select Token",
+      searchToken: "Search token address or symbol",
+      noTokensFound: "No tokens found"
     },
     history: {
       title: "Red Packet History",

@@ -123,7 +123,10 @@ export default {
         count: "红包个数",
         message: "祝福语",
         view: "查看红包"
-      }
+      },
+      selectToken: "选择代币",
+      searchToken: "搜索代币地址或符号",
+      noTokensFound: "未找到代币",
     },
     history: {
       title: "红包记录",

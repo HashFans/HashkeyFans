@@ -7,6 +7,7 @@ import { Roadmap } from "@/components/sections/Roadmap";
 export default function Home() {
   return (
     <div className="w-full">
+      1
       <Hero />
       <Roadmap />
       <Partners />

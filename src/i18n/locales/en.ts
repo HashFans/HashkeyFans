@@ -7,6 +7,8 @@ export default {
     stayTuned: "Stay Tuned",
     eventEnded: "Event Ended",
     connectWallet: "Connect Wallet",
+    cancel: 'Cancel',
+    optional: 'Optional'
   },
   nav: {
     events: "Events",
@@ -158,6 +160,34 @@ export default {
     },
     status: {
       refunded: "Red Packet Refunded",
-    }
-  }
+    },
+  },
+  lottery: {
+    title: 'Lucky Draw',
+    description: 'Create or view lucky draw events',
+    create: 'Create Lucky Draw',
+    history: 'View History',
+    history_title: 'Lucky Draw History',
+    no_history: 'No lucky draw history yet',
+    connect_wallet_tip: 'Please connect your wallet to create a lucky draw', 
+    create_modal: {
+      title: 'Create Lucky Draw',
+      event_title: 'Event Title',
+      event_title_placeholder: 'Enter event title',
+      description: 'Description',
+      description_placeholder: 'Enter event description',
+      image: 'Background Image',
+      image_placeholder: 'Enter image URL',
+      prizes: 'Prizes',
+      add_prize: 'Add Prize',
+      prize_name_placeholder: 'Enter prize name',
+      create: 'Create Draw',
+    },
+    not_found: 'Lottery Not Found',
+    not_found_desc: 'The lottery you are looking for does not exist or has been removed.',
+    created_by: 'Created by',
+    prizes: 'Prizes',
+    amount: 'Amount',
+    share: 'Share',
+  },
 } 

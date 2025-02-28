@@ -8,50 +8,52 @@ datasource db {
 }
 
 model Card {
-  id          Int         @id @default(autoincrement())
-  title       String      @db.VarChar(100)
+  id          Int        @id @default(autoincrement())
+  title       String     @db.VarChar(100)
   description String?
-  imageUrl    String?     @map("image_url") @db.VarChar(255)
-  createdAt   DateTime    @default(now()) @map("created_at")
+  imageUrl    String?    @map("image_url") @db.VarChar(255)
+  createdAt   DateTime   @default(now()) @map("created_at")
   userCards   UserCard[]
-  users       User[]      // 用于 initialCardId 关系
+  users       User[]
 
   @@index([id, title])
   @@map("cards")
 }
 
 model User {
-  id              Int              @id @default(autoincrement())
-  walletAddress   String          @unique @map("wallet_address") @db.VarChar(42)
-  displayAddress  String?         @map("display_address") @db.VarChar(50)
-  shareCode       String?         @unique @map("share_code") @db.VarChar(8)
-  initialCardId   Int?           @map("initial_card_id")
-  createdAt       DateTime        @default(now()) @map("created_at")
-  userCards       UserCard[]      @relation("UserCards")
-  originalCards   UserCard[]      @relation("OriginalOwner")
-  connections     UserConnection[] @relation("UserConnections")
-  connectedBy     UserConnection[] @relation("ConnectedByUsers")
-  initialCard     Card?           @relation(fields: [initialCardId], references: [id])
+  id             Int                  @id @default(autoincrement())
+  walletAddress  String               @unique @map("wallet_address") @db.VarChar(42)
+  displayAddress String?              @map("display_address") @db.VarChar(50)
+  shareCode      String?              @unique @map("share_code") @db.VarChar(8)
+  initialCardId  Int?                 @map("initial_card_id")
+  createdAt      DateTime             @default(now()) @map("created_at")
+  lotteries      Lottery[]
+  participations LotteryParticipant[]
+  originalCards  UserCard[]           @relation("OriginalOwner")
+  userCards      UserCard[]           @relation("UserCards")
+  connectedBy    UserConnection[]     @relation("ConnectedByUsers")
+  connections    UserConnection[]     @relation("UserConnections")
+  initialCard    Card?                @relation(fields: [initialCardId], references: [id])
 
   @@index([walletAddress])
   @@map("users")
 }
 
 model UserCard {
-  id                  Int      @id @default(autoincrement())
-  userId              Int      @map("user_id")
-  cardId              Int      @map("card_id")
-  originalOwnerId     Int      @map("original_owner_id")
+  id                   Int      @id @default(autoincrement())
+  userId               Int      @map("user_id")
+  cardId               Int      @map("card_id")
+  originalOwnerId      Int      @map("original_owner_id")
   originalOwnerAddress String   @map("original_owner_address") @db.VarChar(42)
-  quantity            Int      @default(1)
-  createdAt          DateTime @default(now()) @map("created_at")
-  user                User     @relation("UserCards", fields: [userId], references: [id])
-  originalOwner       User     @relation("OriginalOwner", fields: [originalOwnerId], references: [id])
-  card                Card     @relation(fields: [cardId], references: [id])
+  quantity             Int      @default(1)
+  createdAt            DateTime @default(now()) @map("created_at")
+  card                 Card     @relation(fields: [cardId], references: [id])
+  originalOwner        User     @relation("OriginalOwner", fields: [originalOwnerId], references: [id])
+  user                 User     @relation("UserCards", fields: [userId], references: [id])
 
+  @@unique([userId, cardId, originalOwnerId])
   @@index([userId, cardId])
   @@index([cardId])
-  @@unique([userId, cardId, originalOwnerId])
   @@map("user_cards")
 }
 
@@ -60,9 +62,57 @@ model UserConnection {
   userId          Int      @map("user_id")
   connectedUserId Int      @map("connected_user_id")
   createdAt       DateTime @default(now()) @map("created_at")
-  user            User     @relation("UserConnections", fields: [userId], references: [id])
   connectedUser   User     @relation("ConnectedByUsers", fields: [connectedUserId], references: [id])
+  user            User     @relation("UserConnections", fields: [userId], references: [id])
 
   @@unique([userId, connectedUserId])
   @@map("user_connections")
-} 
+}
+
+model Lottery {
+  id           Int                  @id @default(autoincrement())
+  code         String               @unique @db.VarChar(8)
+  title        String               @db.VarChar(100)
+  description  String?
+  imageUrl     String?              @map("image_url") @db.VarChar(255)
+  creatorId    Int                  @map("creator_id")
+  signature    String
+  status       String               @default("PENDING")
+  drawAt       DateTime?            @map("draw_at")
+  createdAt    DateTime             @default(now()) @map("created_at")
+  updatedAt    DateTime             @updatedAt @map("updated_at")
+  creator      User                 @relation(fields: [creatorId], references: [id])
+  participants LotteryParticipant[]
+  prizes       Prize[]
+
+  @@index([code])
+  @@map("lotteries")
+}
+
+model LotteryParticipant {
+  id        Int      @id @default(autoincrement())
+  lotteryId Int      @map("lottery_id")
+  userId    Int      @map("user_id")
+  prizeId   Int?     @map("prize_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  lottery   Lottery  @relation(fields: [lotteryId], references: [id])
+  prize     Prize?   @relation(fields: [prizeId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([lotteryId, userId])
+  @@map("lottery_participants")
+}
+
+model Prize {
+  id        Int                  @id @default(autoincrement())
+  lotteryId Int                  @map("lottery_id")
+  level     Int
+  name      String               @db.VarChar(100)
+  amount    Int
+  createdAt DateTime             @default(now()) @map("created_at")
+  winners   LotteryParticipant[]
+  lottery   Lottery              @relation(fields: [lotteryId], references: [id])
+
+  @@unique([lotteryId, level])
+  @@map("prizes")
+}

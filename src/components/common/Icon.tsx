@@ -1,3 +1,4 @@
+import { InboxIcon } from "lucide-react";
 import { 
   FaTelegram, 
   FaDiscord, 
@@ -7,7 +8,15 @@ import {
   FaEthereum,
   FaBitcoin,
   FaGlobe,
-  FaLocationDot
+  FaLocationDot,
+  FaInbox,
+  FaEye,
+  FaTrash,
+  FaUpload,
+  FaShare,
+  FaWatchmanMonitoring,
+  FaArrowLeft,
+  FaTicket
 } from "react-icons/fa6";
 import { 
   IoNewspaperOutline, 
@@ -29,7 +38,8 @@ import {
   IoCloseOutline,
   IoCopyOutline,
   IoTrophyOutline,
-  IoCameraOutline
+  IoCameraOutline,
+  IoInformationOutline
 } from "react-icons/io5";
 import { SiSolana } from "react-icons/si";
 
@@ -64,7 +74,16 @@ export const icons = {
   copy: IoCopyOutline,
   trophy: IoTrophyOutline,
   camera: IoCameraOutline,
-  x: IoCloseOutline
+  x: IoCloseOutline,
+  info: IoInformationOutline,
+  inbox: FaInbox,
+  eye: FaEye,
+  trash: FaTrash,
+  upload: FaUpload,
+  share: FaShare,
+  error: FaWatchmanMonitoring,
+  'arrow-left': FaArrowLeft,
+  ticket: FaTicket
 } as const;
 
 export type IconName = keyof typeof icons;

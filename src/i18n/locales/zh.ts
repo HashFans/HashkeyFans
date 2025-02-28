@@ -7,6 +7,8 @@ export default {
     stayTuned: "敬请期待",
     eventEnded: "活动已结束",
     connectWallet: "连接钱包",
+    cancel: "取消",
+    optional: "可选"
   },
   nav: {
     events: "活动",
@@ -160,4 +162,36 @@ export default {
       refunded: "红包已退回",
     }
   },
+  lottery: {
+    title: '幸运抽奖',
+    description: '创建精彩的抽奖活动或查看历史记录',
+    create_card_title: '发起新抽奖',
+    create_card_desc: '创建一个新的抽奖活动，自定义奖励',
+    history_card_title: '抽奖历史',
+    history_card_desc: '查看所有历史抽奖活动及获奖者',
+    create: '发起抽奖',
+    history: '查看历史',
+    history_title: '抽奖历史',
+    no_history: '暂无抽奖记录',
+    connect_wallet_tip: '请先连接钱包以发起抽奖',
+    create_modal: {
+      title: '创建抽奖',
+      event_title: '活动标题',
+      event_title_placeholder: '请输入活动标题',
+      description: '活动描述',
+      description_placeholder: '请输入活动描述',
+      image: '背景图片',
+      image_placeholder: '请输入图片链接',
+      prizes: '奖品设置',
+      add_prize: '添加奖品',
+      prize_name_placeholder: '请输入奖品名称',
+      create: '创建抽奖'
+    },
+    not_found: '抽奖未找到',
+    not_found_desc: '您查找的抽奖不存在或已被删除',
+    created_by: '创建者',
+    prizes: '奖品',
+    amount: '数量',
+    share: '分享',
+  }
 } 

@@ -244,6 +244,7 @@ const DeFiStakingButtons = () => {
   };
 
   const handleStakingClick = () => {
+    // TODO: Add staking v2 link
     window.open('https://hskhodlium.xyz', '_blank');
   };
 
